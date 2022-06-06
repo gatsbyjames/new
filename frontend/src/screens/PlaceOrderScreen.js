@@ -19,7 +19,7 @@ function PlaceOrderScreen() {
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, error, success } = orderCreate;
 
-  const cart = useSelector((state) => state.cart);
+  const cart = useSelector((state2) => state2.cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -27,8 +27,6 @@ function PlaceOrderScreen() {
     .reduce((acc, item) => acc + item.price * item.qty, 0)
     .toFixed(2);
 
-  console.log(cart.cartItems);
-  console.log(cart.itemsPrice);
 
   cart.shippingPrice = (cart.itemsPrice > 100 ? 0 : 10).toFixed(2);
   cart.taxPrice = Number(0.082 * cart.itemsPrice).toFixed(2);

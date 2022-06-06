@@ -16,6 +16,8 @@ import { cartReducer } from "./reducers/cartReducers";
 import {
   orderCreateReducer,
   orderDetailsReducer,
+  orderListMyReducer,
+  orderPayReducer,
 } from "./reducers/orderReducers";
 
 const cartItemFromStorage = localStorage.getItem("cartItems")
@@ -51,6 +53,8 @@ export default configureStore({
     userUpdateProfile: userUpdateProfileReducer,
     orderCreate: orderCreateReducer,
     orderDetails: orderDetailsReducer,
+    orderPay: orderPayReducer,
+    orderListMy: orderListMyReducer,
   },
   initialState,
 });
