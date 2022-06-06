@@ -80,8 +80,8 @@ class OrderSerializer(serializers.ModelSerializer):
     def get_shippingAddress(self,obj):
         try:
             address = ShippingAddressSerializer(
-                obj.shippingAddress, many=False
-            )
+                obj.shippingaddress, many=False
+            ).data # 이기머노? ㅋㅋ 왜 소문자 a로 바꾸고 .data 붙이니까 되노 
         except:
             address = False
         return address
