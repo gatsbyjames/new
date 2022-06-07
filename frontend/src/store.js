@@ -11,6 +11,7 @@ import {
   userDetailesReducer,
   userRegisterReducer,
   userUpdateProfileReducer,
+  userListReducer,
 } from "./reducers/userReducers";
 import { cartReducer } from "./reducers/cartReducers";
 import {
@@ -55,6 +56,7 @@ export default configureStore({
     orderDetails: orderDetailsReducer,
     orderPay: orderPayReducer,
     orderListMy: orderListMyReducer,
+    userList: userListReducer,
   },
   initialState,
 });
