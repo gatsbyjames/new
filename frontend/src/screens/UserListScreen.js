@@ -4,7 +4,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Col, Row, Button, Table } from "react-bootstrap";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { listUsers } from "../actions/userActions";
+import { deleteUser, listUsers } from "../actions/userActions";
 import { useNavigate } from "react-router-dom";
 
 function UserListScreen() {
@@ -25,7 +25,9 @@ function UserListScreen() {
   }, [dispatch]);
 
   const deleteHandler = (id) => {
-    console.log("hi");
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      dispatch(deleteUser(id));
+    }
   };
 
   return (

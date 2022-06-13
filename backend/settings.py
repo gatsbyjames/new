@@ -101,7 +101,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [], # 얘 나중에 react 하고 연결할 떄 쓸 예정
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -167,9 +167,16 @@ MEDIA_URL = '/images/'
 # 얘가 미디어 파일 URL 정하는 코드
 
 STATICFIELS_DIRS = [
-    BASE_DIR / 'static'
+    BASE_DIR / 'static',
+    # BASE_DIR / 'frontend/build/static' 이건 프론트 엔드 build 할떄 쓸듯
+
 ]
 # 얘가 스태틱 파일 디렉토리 정하는 코드
+
+MEDIA_ROOT = BASE_DIR / 'static/images'
+# 얘가 사진 업로드 경로 정하는애
+
+# STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -179,3 +186,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
 #  얘가 접근 허락 해주는 애
+
+
+# if os.getcwd() == '/app':
+    # DEBUG = False

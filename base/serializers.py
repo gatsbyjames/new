@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Product, Order, OrderItem, ShippingAddress
+from .models import Product, Order, OrderItem, Review, ShippingAddress
 from rest_framework_simplejwt.tokens import RefreshToken
 
 class UserSerializer(serializers.ModelSerializer):
@@ -42,10 +42,23 @@ class UserSerializerWithToken(UserSerializer):
         return str(token.access_token)
 
 
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =Review
+        fields = '__all__'
+
 class ProductSerializer(serializers.ModelSerializer):
+
+    reviews = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Product
         fields = '__all__'
+
+    def get_reviews(self, obj):
+        reviews = obj.review_set.all()
+        serializer = ReviewSerializer(reviews, many=True)
+        return serializer.data
 
 
 class ShippingAddressSerializer(serializers.ModelSerializer):
@@ -59,12 +72,9 @@ class OrderItemSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class OrderSerializer(serializers.ModelSerializer):
-
     orderItems = serializers.SerializerMethodField(read_only=True)
     shippingAddress = serializers.SerializerMethodField(read_only=True)
     user = serializers.SerializerMethodField(read_only=True)
-
-
 
     class Meta:
         model = Order
@@ -72,21 +82,18 @@ class OrderSerializer(serializers.ModelSerializer):
 
     def get_orderItems(self, obj):
         items = obj.orderitem_set.all()
-        serilaizer = OrderItemSerializer(items, many=True)
-        return serilaizer.data
+        serializer = OrderItemSerializer(items, many=True)
+        return serializer.data
 
-        # serilaizer 가 잘못되도 500 에러가 발생가능
-
-    def get_shippingAddress(self,obj):
+    def get_shippingAddress(self, obj):
         try:
             address = ShippingAddressSerializer(
-                obj.shippingaddress, many=False
-            ).data # 이기머노? ㅋㅋ 왜 소문자 a로 바꾸고 .data 붙이니까 되노 
+                obj.shippingaddress, many=False).data
         except:
             address = False
         return address
 
-    def get_user(self,obj):
+    def get_user(self, obj):
         user = obj.user
         serializer = UserSerializer(user, many=False)
         return serializer.data

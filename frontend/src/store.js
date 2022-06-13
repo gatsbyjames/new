@@ -5,6 +5,10 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import {
   productListReducer,
   productDetailsReducer,
+  productCreateReducer,
+  productUpdateReducer,
+  productReviewCreateReducer,
+  productTopRatedReducer,
 } from "./reducers/productReducers";
 import {
   userLoginReducer,
@@ -12,12 +16,14 @@ import {
   userRegisterReducer,
   userUpdateProfileReducer,
   userListReducer,
+  userUpdateReducer,
 } from "./reducers/userReducers";
 import { cartReducer } from "./reducers/cartReducers";
 import {
   orderCreateReducer,
   orderDetailsReducer,
   orderListMyReducer,
+  orderListReducer,
   orderPayReducer,
 } from "./reducers/orderReducers";
 
@@ -47,16 +53,27 @@ export default configureStore({
   reducer: {
     productList: productListReducer,
     productDetails: productDetailsReducer,
+    productDelete: productDetailsReducer,
+    productCreate: productCreateReducer,
+    productUpdate: productUpdateReducer,
+    productReviewCreate: productReviewCreateReducer,
+    productTopRated: productTopRatedReducer,
+
     cart: cartReducer,
+
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
     userDetails: userDetailesReducer,
     userUpdateProfile: userUpdateProfileReducer,
+    userList: userListReducer,
+    userDelete: userDetailesReducer,
+    userUpdate: userUpdateReducer,
+
     orderCreate: orderCreateReducer,
     orderDetails: orderDetailsReducer,
     orderPay: orderPayReducer,
     orderListMy: orderListMyReducer,
-    userList: userListReducer,
+    orderList: orderListReducer,
   },
   initialState,
 });
