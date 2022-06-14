@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { Route } from "react-router-dom";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../actions/userActions";
-import {
-  USER_LOGIN_REQUEST,
-  USER_LOGIN_SUCCESS,
-} from "../constants/userConstants";
+import { useNavigate } from "react-router-dom";
+
+import SearchBox from "./SearchBox";
 
 function Header() {
+  const navigate = useNavigate();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
@@ -16,6 +17,7 @@ function Header() {
 
   const logoutHandler = () => {
     dispatch(logout());
+    navigate("/");
   };
 
   return (
@@ -25,18 +27,23 @@ function Header() {
           <LinkContainer to="/">
             <Navbar.Brand>ProShop</Navbar.Brand>
           </LinkContainer>
-
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
+            {/* <Route render={({ history }) => <SearchBox history={history} />} /> */}
             <Nav className="me-auto">
-              <LinkContainer to="/cart">
-                <Nav.Link>
-                  <i className="fas fa-shopping-cart"></i>Cart
-                </Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="/order/100">
-                <Nav.Link>Order</Nav.Link>
-              </LinkContainer>
+              {userInfo ? (
+                <LinkContainer to="/cart">
+                  <Nav.Link>
+                    <i className="fas fa-shopping-cart"></i>Cart
+                  </Nav.Link>
+                </LinkContainer>
+              ) : (
+                <LinkContainer to="/login">
+                  <Nav.Link>
+                    <i className="fas fa-shopping-cart"></i>Cart
+                  </Nav.Link>
+                </LinkContainer>
+              )}
 
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id="username">

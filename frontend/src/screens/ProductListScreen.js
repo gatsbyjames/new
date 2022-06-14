@@ -53,6 +53,7 @@ function ProductListScreen() {
 
   const createProductHandler = (product) => {
     dispatch(createProduct());
+    navigate("/admin/productlist");
   };
 
   const deleteHandler = (id) => {

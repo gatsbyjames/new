@@ -13,13 +13,25 @@ import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { getOrderDetails } from "../actions/orderActions";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 function OrderScreen() {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const orderDetails = useSelector((state) => state.orderDetails);
+  const [sdkReady, setSdkReady] = useState(false);
+
+  const orderDetails = useSelector((state2) => state2.orderDetails);
   const { order, error, loading } = orderDetails;
+
+  const orderPay = useSelector((state) => state.orderPay);
+  const { loading: loadingPay, success: successPay } = orderPay;
+
+  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
+
+  const useLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = useLogin;
 
   if (!loading && !error) {
     order.itemsPrice = order.orderItems
@@ -27,18 +39,26 @@ function OrderScreen() {
       .toFixed(2);
   }
 
+  const addPayPalScript = () => {
+    console.log("hi");
+  };
+
   useEffect(() => {
     if (!order || order._id !== Number(id)) {
       dispatch(getOrderDetails(id));
     }
   }, [dispatch, order, id]);
 
+  const successPaymentHandler = () => {};
+
+  const deliverHandler = () => {};
+
   return loading ? (
     <Loader />
   ) : error ? (
     <Message variant="danger">{error}</Message>
   ) : (
-    <div>
+    <PayPalScriptProvider>
       <h1>Order: {order._id} </h1>
       <Row>
         <Col md={8}>
@@ -140,11 +160,37 @@ function OrderScreen() {
                   <Col>${order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
+              {!order.isPaid && (
+                <ListGroup.Item>
+                  {!loadingPay && <Loader />}
+                  {!sdkReady ? (
+                    <Loader />
+                  ) : (
+                    <PayPalButtons
+                      amount={order.totalPrice}
+                      onSuccess={successPaymentHandler}
+                    />
+                  )}
+                </ListGroup.Item>
+              )}
             </ListGroup>
+            {loadingDeliver && <Loader />}
+            {userInfo &&
+              userInfo.isAdmin &&
+              order.isPaid &&
+              !order.isDelivered && (
+                <ListGroup.Item
+                  type="button"
+                  className="btn btn-block"
+                  onClick={deliverHandler}
+                >
+                  <Button>Mark as Delivered</Button>
+                </ListGroup.Item>
+              )}
           </Card>
         </Col>
       </Row>
-    </div>
+    </PayPalScriptProvider>
   );
 }
 

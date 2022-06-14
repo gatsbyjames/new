@@ -21,9 +21,6 @@ function UserEditScreen() {
   const userDetails = useSelector((state) => state.userDetails);
   const { error, loading, user } = userDetails;
 
-  console.log(user.name);
-  console.log(id);
-
   const userUpdate = useSelector((state) => state.userUpdate);
   const {
     error: errorUpdate,
@@ -44,6 +41,7 @@ function UserEditScreen() {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(updateUser({ _id: user._id, name, email, isAdmin }));
+    navigate("/admin/userlist");
   };
 
   return (

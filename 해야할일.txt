@@ -1,9 +1,25 @@
 1. product search & pagination
 
-2. product create & update fail
+2. product create form
 
-3. product review is 400 error
+3. learn how to upload react-bootstrap image file and storage the value while editting
 
-4. order pay & delivered
+4. order pay & delivered (paypal button)
 
-5. keep stay in login
+5. axios coin market price
+
+6. write
+
+
+
+----------------------- error --------------------------
+Uncaught Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+
+Check the render method of `ProductEditScreen`.
+
+react_devtools_backend.js:4026 The above error occurred in the <div> component:
+
+
+react-dom.development.js:28389 Uncaught Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+
+

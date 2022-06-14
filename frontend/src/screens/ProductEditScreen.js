@@ -128,18 +128,29 @@ function ProductEditScreen() {
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
               ></Form.Control>
+            </Form.Group>
 
-              <Form.File
-                id="image=file"
+            <Form.Group controlId="image">
+              <Form.Label>Image</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter image"
+                value={image}
+                onChange={(e) => setImage(e.target.value)}
+                readOnly
+              />
+
+              {/* <Form.File
+                id="image-file"
                 label="Choose File"
                 custom
                 onChange={uploadFileHandler}
               ></Form.File>
-              {uploading && <Loader />}
+              {uploading && <Loader />} */}
             </Form.Group>
 
             <Form.Group controlId="brand">
-              <Form.label>Brand</Form.label>
+              <Form.Label>Brand</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter brand"

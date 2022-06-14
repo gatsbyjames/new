@@ -9,14 +9,16 @@ import {
   productUpdateReducer,
   productReviewCreateReducer,
   productTopRatedReducer,
+  productDeleteReducer,
 } from "./reducers/productReducers";
 import {
   userLoginReducer,
-  userDetailesReducer,
+  userDetailsReducer,
   userRegisterReducer,
   userUpdateProfileReducer,
   userListReducer,
   userUpdateReducer,
+  userDeleteReducer,
 } from "./reducers/userReducers";
 import { cartReducer } from "./reducers/cartReducers";
 import {
@@ -25,6 +27,7 @@ import {
   orderListMyReducer,
   orderListReducer,
   orderPayReducer,
+  orderDeliverReducer,
 } from "./reducers/orderReducers";
 
 const cartItemFromStorage = localStorage.getItem("cartItems")
@@ -41,7 +44,7 @@ const shippingAddressFromStorage = localStorage.getItem("shippingAddress")
 
 // our data come from state
 
-const initialState = {
+const preloadedState = {
   cart: {
     cartItems: cartItemFromStorage,
     shippingAddress: shippingAddressFromStorage,
@@ -49,31 +52,36 @@ const initialState = {
   userLogin: { userInfo: userInfoFromStorage },
 };
 
+const reducer = {
+  productList: productListReducer,
+  productDetails: productDetailsReducer,
+  productDelete: productDeleteReducer,
+  productCreate: productCreateReducer,
+  productUpdate: productUpdateReducer,
+  productReviewCreate: productReviewCreateReducer,
+  productTopRated: productTopRatedReducer,
+
+  cart: cartReducer,
+
+  userLogin: userLoginReducer,
+  userRegister: userRegisterReducer,
+  userDetails: userDetailsReducer,
+
+  userUpdateProfile: userUpdateProfileReducer,
+  userList: userListReducer,
+  userDelete: userDeleteReducer,
+  userUpdate: userUpdateReducer,
+
+  orderCreate: orderCreateReducer,
+  orderDetails: orderDetailsReducer,
+  orderPay: orderPayReducer,
+  orderListMy: orderListMyReducer,
+  orderList: orderListReducer,
+  orderDeliver: orderDeliverReducer,
+};
+
 export default configureStore({
-  reducer: {
-    productList: productListReducer,
-    productDetails: productDetailsReducer,
-    productDelete: productDetailsReducer,
-    productCreate: productCreateReducer,
-    productUpdate: productUpdateReducer,
-    productReviewCreate: productReviewCreateReducer,
-    productTopRated: productTopRatedReducer,
-
-    cart: cartReducer,
-
-    userLogin: userLoginReducer,
-    userRegister: userRegisterReducer,
-    userDetails: userDetailesReducer,
-    userUpdateProfile: userUpdateProfileReducer,
-    userList: userListReducer,
-    userDelete: userDetailesReducer,
-    userUpdate: userUpdateReducer,
-
-    orderCreate: orderCreateReducer,
-    orderDetails: orderDetailsReducer,
-    orderPay: orderPayReducer,
-    orderListMy: orderListMyReducer,
-    orderList: orderListReducer,
-  },
-  initialState,
+  reducer,
+  preloadedState,
+  middleware: [thunk],
 });

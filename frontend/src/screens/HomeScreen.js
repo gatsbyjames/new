@@ -5,13 +5,18 @@ import Product from "../components/Product";
 import { listProducts } from "../actions/productActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import Paginate from "../components/Paginate";
+import { useLocation } from "react-router-dom";
 
 function HomeScreen() {
   // const [products, setProducts] = useState([]);
 
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
-  const { error, loading, products } = productList;
+  const { error, loading, products, page, pages } = productList;
+  const { search } = useLocation();
+
+  let keyword = search;
 
   useEffect(() => {
     dispatch(listProducts());
@@ -38,13 +43,16 @@ function HomeScreen() {
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <Row>
-          {products.map((product) => (
-            <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-              <Product product={product} />
-            </Col>
-          ))}
-        </Row>
+        <div>
+          <Row>
+            {products.map((product) => (
+              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                <Product product={product} />
+              </Col>
+            ))}
+          </Row>
+          <Paginate page={page} pages={pages} keyword={keyword} />
+        </div>
       )}
     </div>
   );
